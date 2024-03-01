@@ -1,0 +1,128 @@
+<form action="/" method="POST" id="searchForm">
+    {% csrf_token %}
+    <input type="hidden" name="city" id="cityInput" class="cityField">
+    <input type="hidden" name="date_arrival" id="dateArrivalInput">
+    <input type="hidden" name="date_departure" id="dateDepartureInput">
+    <input type="hidden" name="guest" id="guestsInput">
+
+    <div class="container-search">
+        <div class="element-search" >
+            <label style="display: flex; align-items: center;">
+                <div class="">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                      </svg>
+                </div>
+                <div class="text">Destino</div>
+            </label>
+            <div class="dropdown">
+                <a href="#" class="city-field text-clean">seleccionar ciudad</a>
+                <div class="dropdown-content">
+                    {% for city in cities %}
+                        <a href="#" class="city-item" value="{{ city }}">{{city}}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="element-search" >
+            <label style="display: flex; align-items: center;" >
+                <div>
+                    <svg width="15" height="11" viewBox="0 0 15 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13.7014 1.24011H1.32428V10.3348H13.7014V1.24011Z" stroke="black" stroke-width="1.02069" stroke-miterlimit="10"/>
+                        <path d="M1.32428 3.68835H13.7014" stroke="black" stroke-width="1.02069" stroke-miterlimit="10"/>
+                        <path d="M1.32428 7.0116H13.7014" stroke="black" stroke-width="1.02069" stroke-miterlimit="10"/>
+                        <path d="M5.72585 10.2126V3.68835H9.29995V10.2126" stroke="black" stroke-width="1.02069" stroke-miterlimit="10"/>
+                        <path d="M9.29979 0.127808V1.24005" stroke="black" stroke-width="1.02069" stroke-miterlimit="10"/>
+                        <path d="M5.72585 1.24005V0.127808" stroke="black" stroke-width="1.02069" stroke-miterlimit="10"/>
+                    </svg>                        
+                </div>
+                <div class="text">llegada - salida</div>
+            </label>
+            <input type="text" class="form-control daterange" id="datesArrivalDeportues">
+        </div>
+        <div class="element-search">
+            <label style="display: flex; align-items: center;">
+                <div>
+                    <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0.606918 12.3347V9.92758C0.606918 9.15084 0.886643 8.40594 1.38454 7.85671C1.88243 7.30747 2.55774 6.9989 3.26187 6.9989H6.03628C6.74041 6.9989 7.41571 7.30747 7.91361 7.85671C8.4115 8.40594 8.6912 9.15084 8.6912 9.92758V12.3347" stroke="black" stroke-width="1.02069" stroke-miterlimit="10"/>
+                        <path d="M6.71182 5.68066H8.67576C9.02236 5.68066 9.36557 5.75599 9.68579 5.9023C10.006 6.04862 10.297 6.26307 10.5421 6.53343C10.7871 6.80379 10.9815 7.12475 11.1142 7.47799C11.2468 7.83123 11.3151 8.20982 11.3151 8.59217V10.4777" stroke="black" stroke-width="1.02069" stroke-miterlimit="10"/>
+                        <path d="M4.64924 5.67496C5.45554 5.67496 6.10919 4.95392 6.10919 4.06447C6.10919 3.17502 5.45554 2.45398 4.64924 2.45398C3.84293 2.45398 3.18929 3.17502 3.18929 4.06447C3.18929 4.95392 3.84293 5.67496 4.64924 5.67496Z" stroke="black" stroke-width="1.02069" stroke-miterlimit="10"/>
+                        <path d="M8.16657 4.61466C8.97288 4.61466 9.62652 3.89362 9.62652 3.00417C9.62652 2.11472 8.97288 1.39368 8.16657 1.39368C7.36026 1.39368 6.70662 2.11472 6.70662 3.00417C6.70662 3.89362 7.36026 4.61466 8.16657 4.61466Z" stroke="black" stroke-width="1.02069" stroke-miterlimit="10"/>
+                        </svg>                        
+                </div>
+                <div class="text">HUESPEDES</div>
+            </label>
+            <div class="dropdown">
+                <a href="#" class="guest-field text-clean">huespedes</a>
+                <div class="dropdown-content">
+                    {% for guest in guests %}
+                        <a href="#" class="dropdown-item" data-guest="{{guest}}">{{guest}} {% if guest > 1 %} huespedes {% else %} huesped {% endif %}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <button class="element-search text" type="submit" id="submitCity">
+            Buscar
+        </button>
+    </div>
+    
+</form>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.city-item').click(function(e) {
+            e.preventDefault();
+            var selectedCityValue = $(this).text().trim();
+            $('.city-field').text(selectedCityValue);
+            $('.cityField').val(selectedCityValue);
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.dropdown-item').click(function(e) {
+           e.preventDefault();
+           var selectedGuestValue = $(this).text().trim();
+           $('.guest-field').text(selectedGuestValue);
+
+           var guestValue = $(this).attr("data-guest");
+           $('input[id="guestsInput"]').val(guestValue);
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.daterange').daterangepicker({
+            autoUpdateInput: false, 
+            autoclose: true,
+            locale: {
+                cancelLabel: 'Clear'
+            }
+        });
+    
+        $('.daterange').on('apply.daterangepicker', function(ev, picker){
+            var arrivalDate = picker.startDate.format('MM/DD/YYYY');
+            var departureDate = picker.endDate.format('MM/DD/YYYY');
+            $(this).val(arrivalDate + ' - ' + departureDate);
+
+            $('input[id="dateArrivalInput"]').val(arrivalDate);
+            $('input[id="dateDepartureInput"]').val(departureDate);
+
+        });
+
+        $('.daterange').on('cancel.daterangepicker', function(ev, picker){
+            $(this).val('');
+        });
+
+        
+    });
+</script>
+
+<script  type="text/javascript">
+    $('#submitCity').click(function(e){
+            e.preventDefault();
+            $('#searchForm').submit();
+        });
+</script>
